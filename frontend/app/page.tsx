@@ -23,8 +23,8 @@ export default function Home() {
           ></Image>
         </Link>
       </div>
+      {/* Main Heading */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
-        {/* Main Heading */}
         <h1 className="mb-4 text-center text-5xl md:text-7xl font-bold tracking-tight text-balance">
           IdeaSurf
         </h1>
