@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function Home() {
@@ -10,7 +11,18 @@ export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
       <div className="absolute inset-0 bg-grid pointer-events-none" />
-
+      {/* Top Left Logo */}
+      <div className="absolute z-15">
+        <Link href="/">
+          <Image
+            src="/assets/ideaSurf-removebg.png"
+            alt="IdeaSurf Logo"
+            width={160}
+            height={100}
+            className="ml-2 mt-.5"
+          ></Image>
+        </Link>
+      </div>
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
         {/* Main Heading */}
         <h1 className="mb-4 text-center text-5xl md:text-7xl font-bold tracking-tight text-balance">

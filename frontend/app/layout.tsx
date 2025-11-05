@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "ideasurf - the project browser",
   description: "get inspired here",
+  icons: { icon: "assets/logo.png" },
 };
 
 export default function RootLayout({
