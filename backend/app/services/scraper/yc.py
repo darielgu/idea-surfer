@@ -1,7 +1,7 @@
 import json
 import time
 
-from app.models.project import Project
+from app.models.project import ProjectYc as Project
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service

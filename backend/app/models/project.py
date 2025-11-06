@@ -3,7 +3,7 @@ from typing import List, Optional
 from pydantic import BaseModel, HttpUrl
 
 
-class Project(BaseModel):
+class ProjectYc(BaseModel):
     name: str
     short_description: Optional[str] = None
     long_description: Optional[str] = None

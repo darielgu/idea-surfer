@@ -13,4 +13,5 @@ venv.bak/
 *.swp
 .DS_Store
 
+.env
 yc_Fall_2025.json
