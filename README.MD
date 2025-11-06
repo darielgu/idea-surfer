@@ -1,1 +1,1 @@
-# WIP - Search for project ideas
+# Search for project ideas == Get inspired
