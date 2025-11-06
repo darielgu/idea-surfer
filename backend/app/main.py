@@ -2,7 +2,10 @@ import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 
+from app.routes.scraper_routes import router as scraper_router
+
 app = FastAPI()
+app.include_router(scraper_router)
 
 
 class SearchQuery(BaseModel):
