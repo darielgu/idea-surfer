@@ -1,13 +1,13 @@
 from typing import List, Optional
 
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel
 
 
 class ProjectYc(BaseModel):
     name: str
     short_description: Optional[str] = None
     long_description: Optional[str] = None
-    url: HttpUrl
+    url: str | None = None
     source: str
     tags: List[str] = []
     batch: Optional[str] = None

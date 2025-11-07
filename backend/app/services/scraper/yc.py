@@ -2,6 +2,7 @@ import json
 import time
 
 from app.models.project import ProjectYc as Project
+from app.services.embedder.embedder import store_in_db_yc
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
@@ -34,7 +35,7 @@ def scrape_batch(batch_name: str, limit: int = 10):
     )
     print(f"\nScraping batch: {batch_name}")
 
-    driver = start_driver(headless=False)
+    driver = start_driver(headless=True)
     driver.get(base_url)
     time.sleep(3)
 
@@ -139,7 +140,7 @@ def scrape_batch(batch_name: str, limit: int = 10):
                 name=name,
                 short_description=short_description,
                 long_description=long_description,
-                url=href,  # pyright: ignore[reportArgumentType]
+                url=href,
                 source="YC",
                 tags=tags,
                 location=location,
@@ -156,28 +157,26 @@ def scrape_batch(batch_name: str, limit: int = 10):
         driver.switch_to.window(driver.window_handles[0])
         time.sleep(1)
 
-    # * save results -- TEMP
+    # * save results -- in json for logs
     output_path = f"yc_{batch_name.replace(' ', '_')}.json"
     with open(output_path, "w") as f:
         json.dump([p.model_dump(mode="json") for p in projects], f, indent=2)
-
-    print(f"\nScraped {len(projects)} projects for {batch_name}")
-    print(f"Saved to {output_path}")
-    # * END OF -- TEMP : for now saving to json - in future embed each dict obj into DB
-
+    print(f"Saved projects in json for logs to {output_path}")
     print("=========================================")
-    print(f"Projects: {projects}")
-
+    print(f"Returning {len(projects)} projects scraped from {batch_name}")
     driver.quit()
+    return projects
 
 
 def run_scrape_yc(batches: list[str]):
     """Run YC scraper for predefined batches."""
     for b in batches:
-        scrape_batch(b, limit=10)
+        print(f"Starting scrape for batch: {b}")
+        projects = scrape_batch(b, limit=10)
+        print(f"Storing {len(projects)} projects from batch {b} into DB.")
+        store_in_db_yc(projects)
 
 
 if __name__ == "__main__":
     batches = ["Fall 2025"]
-    for b in batches:
-        scrape_batch(b, limit=10)
+    run_scrape_yc(batches)
