@@ -28,6 +28,22 @@ def start_driver(headless: bool = False):
     return driver
 
 
+def scroll_to_bottom(driver):
+    """Scroll to the bottom of the page to load all content."""
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while True:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(2)  # wait for new content to load
+        new_height = driver.execute_script("return document.body.scrollHeight")
+        if new_height == last_height:
+            break
+        last_height = new_height
+
+
+def scrape_more_batches(batch_name):
+    pass
+
+
 def scrape_batch(batch_name: str, limit: int = 10):
     """Scrape YC company list and individual company pages."""
     base_url = (
@@ -35,10 +51,16 @@ def scrape_batch(batch_name: str, limit: int = 10):
     )
     print(f"\nScraping batch: {batch_name}")
 
-    driver = start_driver(headless=True)
+    driver = start_driver(headless=False)  # start a chrome browser instance
+
+    # navigate to the yc companies page for the specified batch then wait for js to load
     driver.get(base_url)
     time.sleep(3)
 
+    # scroll to bottom to load all companies
+    scroll_to_bottom(driver)
+
+    # creates a list of all company cards found on the page that match Anchor tag with class name containing 'company_'
     cards = driver.find_elements(By.CSS_SELECTOR, "a[class*='company_']")
     print(f"Found {len(cards)} companies in {batch_name}")
 
@@ -108,9 +130,7 @@ def scrape_batch(batch_name: str, limit: int = 10):
         for row in info_rows:
             try:
                 label_el = row.find_element(By.CSS_SELECTOR, "span")
-                label = (
-                    label_el.text.strip().lower().rstrip(":")
-                )  # e.g. 'founded', 'batch', etc.
+                label = label_el.text.strip().lower().rstrip(":")
 
                 # value in either <span> or <a>
                 try:
@@ -168,15 +188,25 @@ def scrape_batch(batch_name: str, limit: int = 10):
     return projects
 
 
-def run_scrape_yc(batches: list[str]):
+def run_scrape_yc(batches: list[str], limit_per_batch: int = 10):
     """Run YC scraper for predefined batches."""
     for b in batches:
         print(f"Starting scrape for batch: {b}")
-        projects = scrape_batch(b, limit=10)
+        projects = scrape_batch(b, limit=limit_per_batch)
+        print(f"Storing {len(projects)} projects from batch {b} into DB.")
+        store_in_db_yc(projects)
+
+
+def just_test_scrape():
+    batches = ["Fall 2025"]
+    for b in batches:
+        print(f"Starting scrape for batch: {b}")
+        projects = scrape_batch(b, limit=140)
         print(f"Storing {len(projects)} projects from batch {b} into DB.")
         store_in_db_yc(projects)
 
 
 if __name__ == "__main__":
     batches = ["Fall 2025"]
-    run_scrape_yc(batches)
+    run_scrape_yc(batches, 140)  # limit to 140 per batch for testing
+    # just_test_scrape()
