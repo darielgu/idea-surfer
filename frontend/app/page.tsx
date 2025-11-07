@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Search, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 
 export default function Home() {
@@ -22,6 +22,41 @@ export default function Home() {
     a16z?: boolean;
     devpost?: boolean;
   }>({});
+  // Carousel prompts
+  const prompts = [
+    "AI Customer Service",
+    "Healthcare and AI",
+    "Fintech + AI",
+    "AI for Education",
+    "Productivity with AI",
+    "Generative Design",
+    "MLOps",
+    "Privacy-preserving AI",
+  ];
+
+  const carouselRef = useRef<HTMLDivElement | null>(null);
+  const chipRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // carousel: move to next chip every 3s and center it smoothly
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((i) => (i + 2) % prompts.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [prompts.length]);
+
+  useEffect(() => {
+    const el = chipRefs.current[currentIndex];
+    if (el) {
+      el.scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "nearest",
+      });
+    }
+  }, [currentIndex]);
 
   // Search handler
   async function handleSearch(searchQuery: string) {
@@ -141,6 +176,33 @@ export default function Home() {
               <Search />
             </Button>
           </form>
+
+          {/* Prompt carousel (modern horizontal scroller) */}
+          <div className="mt-4 flex items-center">
+            <div
+              ref={carouselRef}
+              // remove horizontal padding so width calc for 4 items is accurate
+              className="no-scrollbar flex w-full gap-3 overflow-x-auto py-2 snap-x snap-mandatory"
+              role="list"
+              style={{ scrollPaddingInline: "0" }}
+            >
+              {prompts.map((p, idx) => (
+                <button
+                  key={p}
+                  ref={(el) => {
+                    chipRefs.current[idx] = el;
+                  }}
+                  type="button"
+                  onClick={() => setSearchQuery(p)}
+                  // make each chip a fixed fraction so exactly 4 are visible
+                  className="snap-start whitespace-nowrap rounded-full bg-muted-foreground/10 px-4 py-2 text-sm hover:bg-muted-foreground/20 truncate text-center shrink-0"
+                  style={{ flex: "0 0 calc((100% - 2.25rem) / 4)" }}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </main>
