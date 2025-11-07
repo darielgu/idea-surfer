@@ -116,60 +116,70 @@ export default function Home() {
               <button
                 type="button"
                 aria-label="Toggle filters"
+                aria-expanded={showFilters}
                 onClick={() => setShowFilters((s) => !s)}
                 className="absolute inset-y-0 right-0 mr-2 flex items-center rounded-md px-2 text-muted-foreground hover:text-foreground"
               >
-                <ChevronDown />
+                <ChevronDown
+                  className={`transition-transform duration-200 ease-out ${
+                    showFilters ? "rotate-180" : "rotate-0"
+                  }`}
+                />
               </button>
 
-              {/* Filters menu */}
-              {showFilters && (
-                <div className="absolute right-0 left-0 mt-2 z-20 w-full max-w-sm rounded-md border bg-white p-3 shadow-md">
-                  <div className="flex flex-col gap-2 text-sm text-foreground">
-                    <label className="inline-flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={!!selectedFilters.yc}
-                        onChange={(e) =>
-                          setSelectedFilters((prev) => ({
-                            ...prev,
-                            yc: e.target.checked,
-                          }))
-                        }
-                      />
-                      YC
-                    </label>
+              {/* Filters menu (kept in DOM for smooth transitions) */}
+              <div
+                className={`absolute right-0 left-0 mt-2 z-20 w-full max-w-sm rounded-md border bg-white p-3 shadow-md origin-top-right transform transition-all duration-200 ease-out ${
+                  showFilters
+                    ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+                    : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
+                }`}
+                aria-hidden={!showFilters}
+              >
+                <div className="flex flex-col gap-2 text-sm text-foreground">
+                  <label className="inline-flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={!!selectedFilters.yc}
+                      onChange={(e) =>
+                        setSelectedFilters((prev) => ({
+                          ...prev,
+                          yc: e.target.checked,
+                        }))
+                      }
+                    />
+                    YC
+                  </label>
 
-                    <label className="inline-flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={!!selectedFilters.a16z}
-                        onChange={(e) =>
-                          setSelectedFilters((prev) => ({
-                            ...prev,
-                            a16z: e.target.checked,
-                          }))
-                        }
-                      />
-                      A16z
-                    </label>
+                  <label className="inline-flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={!!selectedFilters.a16z}
+                      onChange={(e) =>
+                        setSelectedFilters((prev) => ({
+                          ...prev,
+                          a16z: e.target.checked,
+                        }))
+                      }
+                    />
+                    A16z
+                  </label>
 
-                    <label className="inline-flex items-center gap-2">
-                      <input
-                        type="checkbox"
-                        checked={!!selectedFilters.devpost}
-                        onChange={(e) =>
-                          setSelectedFilters((prev) => ({
-                            ...prev,
-                            devpost: e.target.checked,
-                          }))
-                        }
-                      />
-                      Devpost
-                    </label>
-                  </div>
+                  <label className="inline-flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={!!selectedFilters.devpost}
+                      onChange={(e) =>
+                        setSelectedFilters((prev) => ({
+                          ...prev,
+                          devpost: e.target.checked,
+                        }))
+                      }
+                    />
+                    Devpost
+                  </label>
                 </div>
-              )}
+              </div>
             </div>
 
             <Button className="ml-1 ">
