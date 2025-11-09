@@ -3,18 +3,15 @@ This script reads a JSON file that was outputed from devpost.py scraper. It will
 in order to append to the Supabase 'projects' table with embeddings generated from OpenAI.
 """
 import os 
-from supabase import create_client, Client
+from app.services.db.supa_base_client import supa_base_client
 from openai import OpenAI
 import json
 import dotenv
 
 dotenv.load_dotenv()
 
-url: str = os.getenv("SUPABASE_URL")
-apiKey: str = os.getenv("SUPABASE_API_KEY")
 openAiKey = os.getenv("OPENAI_API_KEY")
 
-supabase: Client = create_client(url, apiKey)
 openmod = OpenAI(api_key=openAiKey)
 EMBED_MODEL = "text-embedding-3-small"
 
@@ -37,7 +34,7 @@ def supaCheck(link: str) -> bool:
 
     try:
         res = (
-            supabase.table("projects")
+            supa_base_client.table("projects")
             .select("url", count="exact")
             .eq("url", link)
             .limit(1)
@@ -79,7 +76,7 @@ for item in projects:
 
     # insert
     supaResponse = (
-        supabase.table("projects")
+        supa_base_client.table("projects")
         .insert({
             "name": item.get("name"),
             "short_description": item.get("short_description"),
