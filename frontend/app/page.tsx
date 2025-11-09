@@ -6,8 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  // Declare Router & mount
+  const router = useRouter();
+
   // load backend url from env variable
   const BACKEND_URL =
     process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
@@ -60,19 +64,9 @@ export default function Home() {
 
   // Search handler
   async function handleSearch(searchQuery: string) {
-    setLoading(true);
-    try {
-      const response = await axios.get(`${BACKEND_URL}/search`, {
-        params: { query: searchQuery },
-      });
-      setResults(response.data);
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    } finally {
-      setLoading(false);
-    }
+    // set results and navigate to search page providing the search query & results & loading state
+    router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
   }
-
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
       <div className="absolute inset-0 bg-grid pointer-events-none" />
@@ -102,7 +96,13 @@ export default function Home() {
         {/* Search Bar */}
         <div className="w-full max-w-2xl mb-8">
           {/* <div className="flex flex-row"> */}
-          <form className="flex flex-row">
+          <form
+            className="flex flex-row"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch(searchQuery);
+            }}
+          >
             <div className="relative w-full">
               <Input
                 type="text"
@@ -182,7 +182,7 @@ export default function Home() {
               </div>
             </div>
 
-            <Button className="ml-1 ">
+            <Button className="ml-1 " type="submit">
               <Search />
             </Button>
           </form>

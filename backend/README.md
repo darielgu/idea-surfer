@@ -6,7 +6,7 @@ to run our scraper you will need to
 
 Have a stable version of UV downloaded
 
-`uv synv`
+`uv sync`
 
 ### Running the current scraper
 
