@@ -17,10 +17,17 @@ REDIS_URL = os.getenv("REDIS_URL")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    r = redis.from_url(REDIS_URL, encoding="utf-8", decode_responses=True)
-    await FastAPILimiter.init(r)
+    redis_conn = await redis.from_url(
+        REDIS_URL, encoding="utf-8", decode_responses=True
+    )
+    try:
+        await FastAPILimiter.init(redis_conn)
+
+    except Exception as e:
+        print("⚠️ FastAPILimiter init failed:", e)
+
     yield
-    await r.close()  # type: ignore
+    await redis_conn.close()
 
 
 origins = [
