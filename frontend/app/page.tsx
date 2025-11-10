@@ -90,6 +90,7 @@ export default function Home() {
             width={160}
             height={100}
             className="ml-2 mt-.5"
+            unoptimized
           ></Image>
         </Link>
       </div>

@@ -1,5 +1,4 @@
 "use client";
-export const dynamic = "force-dynamic";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, ChevronDown } from "lucide-react";
@@ -92,6 +91,7 @@ export default function Home() {
             width={160}
             height={100}
             className="ml-2 mt-.5"
+            unoptimized
           ></Image>
         </Link>
       </div>
