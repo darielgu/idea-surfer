@@ -24,6 +24,7 @@ type Project = {
 export default function Home() {
   const router = useRouter();
   const query = useSearchParams().get("query");
+  const sources = useSearchParams().getAll("sources");
   // load backend url from env variable
   const BACKEND_URL =
     process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
@@ -34,9 +35,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<{
-    yc?: boolean;
+    YC?: boolean;
     a16z?: boolean;
-    devpost?: boolean;
+    Devpost?: boolean;
   }>({});
 
   // Search handler
@@ -48,15 +49,27 @@ export default function Home() {
     }
 
     setSearchQuery(query);
-    handleSearch(query);
+    handleSearch(query, sources);
   }, [query]);
 
-  async function handleSearch(searchQuery: string) {
+  async function handleSearch(searchQuery: string, sources?: string[]) {
     setLoading(true);
 
     try {
       const response = await axios.get(`${BACKEND_URL}/search/`, {
-        params: { query: searchQuery },
+        params: {
+          query: searchQuery,
+          ...(sources ? { sources } : {}),
+        },
+        paramsSerializer: (params) => {
+          const searchParams = new URLSearchParams();
+          Object.entries(params).forEach(([key, value]) => {
+            if (Array.isArray(value))
+              value.forEach((v) => searchParams.append(key, v));
+            else if (value != null) searchParams.append(key, value as string);
+          });
+          return searchParams.toString();
+        },
       });
       setResults(response.data.results);
       console.log(response.data);
@@ -146,11 +159,11 @@ export default function Home() {
                   <label className="inline-flex items-center gap-2">
                     <input
                       type="checkbox"
-                      checked={!!selectedFilters.yc}
+                      checked={!!selectedFilters.YC}
                       onChange={(e) =>
                         setSelectedFilters((prev) => ({
                           ...prev,
-                          yc: e.target.checked,
+                          YC: e.target.checked,
                         }))
                       }
                     />
@@ -174,11 +187,11 @@ export default function Home() {
                   <label className="inline-flex items-center gap-2">
                     <input
                       type="checkbox"
-                      checked={!!selectedFilters.devpost}
+                      checked={!!selectedFilters.Devpost}
                       onChange={(e) =>
                         setSelectedFilters((prev) => ({
                           ...prev,
-                          devpost: e.target.checked,
+                          Devpost: e.target.checked,
                         }))
                       }
                     />

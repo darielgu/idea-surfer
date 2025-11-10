@@ -22,9 +22,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<{
-    yc?: boolean;
+    YC?: boolean;
     a16z?: boolean;
-    devpost?: boolean;
+    Devpost?: boolean;
   }>({});
   // Carousel prompts
   const prompts = [
@@ -69,9 +69,14 @@ export default function Home() {
       router.replace("/");
       return;
     }
+    const activeFilters = Object.entries(selectedFilters)
+      .filter(([_, value]) => value)
+      .map(([key, _]) => key);
+    const params = new URLSearchParams({ query: searchQuery });
+    activeFilters.forEach((f) => params.append("sources", f));
 
     // set results and navigate to search page providing the search query & results & loading state
-    router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+    router.push(`/search?${params.toString()}`);
   }
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
@@ -146,11 +151,11 @@ export default function Home() {
                   <label className="inline-flex items-center gap-2">
                     <input
                       type="checkbox"
-                      checked={!!selectedFilters.yc}
+                      checked={!!selectedFilters.YC}
                       onChange={(e) =>
                         setSelectedFilters((prev) => ({
                           ...prev,
-                          yc: e.target.checked,
+                          YC: e.target.checked,
                         }))
                       }
                     />
@@ -174,11 +179,11 @@ export default function Home() {
                   <label className="inline-flex items-center gap-2">
                     <input
                       type="checkbox"
-                      checked={!!selectedFilters.devpost}
+                      checked={!!selectedFilters.Devpost}
                       onChange={(e) =>
                         setSelectedFilters((prev) => ({
                           ...prev,
-                          devpost: e.target.checked,
+                          Devpost: e.target.checked,
                         }))
                       }
                     />
