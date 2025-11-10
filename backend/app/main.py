@@ -23,15 +23,14 @@ async def lifespan(app: FastAPI):
     await r.close()  # type: ignore
 
 
-app = FastAPI(lifespan=lifespan)  # type: ignore
-app.include_router(scraper_router)
-app.include_router(search)
 origins = [
     "http://localhost:3000",
     "https://idea-surfer-fe.vercel.app",
     "http://idea-surfer-fe.vercel.app",
     "https://ideasurfer.xyz",
 ]
+
+app = FastAPI(lifespan=lifespan)  # type: ignore
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -39,6 +38,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(scraper_router)
+app.include_router(search)
 
 
 @app.get("/")
