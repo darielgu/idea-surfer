@@ -87,14 +87,15 @@ export function ProjectModal({
             </div>
 
             <div>
-              {Object.entries(project.metadata).map(([key, value]) => (
-                <div key={key} className="mt-2">
-                  <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-1">
-                    {key.replace(/_/g, " ")}
-                  </h4>
-                  <p className="text-sm text-foreground">{value}</p>
-                </div>
-              ))}
+              {project.metadata &&
+                Object.entries(project.metadata).map(([key, value]) => (
+                  <div key={key} className="mt-2">
+                    <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-1">
+                      {key.replace(/_/g, " ")}
+                    </h4>
+                    <p className="text-sm text-foreground">{value}</p>
+                  </div>
+                ))}
             </div>
           </div>
 
