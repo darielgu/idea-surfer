@@ -95,7 +95,20 @@ export default function Home() {
         {/* Search Bar */}
         <div className="w-full max-w-2xl mb-8">
           {/* <div className="flex flex-row"> */}
-          <form className="flex flex-row">
+          <form
+            className="flex flex-row"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const q = searchQuery?.trim() ?? "";
+              if (q === "") {
+                // keep the existing behavior: if empty, go home
+                router.replace("/");
+                return;
+              }
+              // update the URL query param which the useEffect listens to
+              router.push(`/search?query=${encodeURIComponent(q)}`);
+            }}
+          >
             <div className="relative w-full">
               <Input
                 type="text"
@@ -175,7 +188,7 @@ export default function Home() {
               </div>
             </div>
 
-            <Button className="ml-1 ">
+            <Button className="ml-1 " type="submit">
               <Search />
             </Button>
           </form>
@@ -188,8 +201,9 @@ export default function Home() {
               Searching for project ideas similar to "{searchQuery}"...
             </p>
           ) : results.length === 0 ? (
-            <p className="text-center text-muted-foreground">
-              No results found.
+            <p className="text-center text-muted-foreground mt-2">
+              Too many requests or no results found for "{searchQuery}". Please
+              try again later.
             </p>
           ) : (
             <div className="flex flex-col gap-4">

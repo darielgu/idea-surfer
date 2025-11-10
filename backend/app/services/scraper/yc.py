@@ -51,7 +51,7 @@ def scrape_batch(batch_name: str, limit: int = 10):
     )
     print(f"\nScraping batch: {batch_name}")
 
-    driver = start_driver(headless=False)  # start a chrome browser instance
+    driver = start_driver(headless=True)  # start a chrome browser instance
 
     # navigate to the yc companies page for the specified batch then wait for js to load
     driver.get(base_url)
@@ -207,6 +207,6 @@ def just_test_scrape():
 
 
 if __name__ == "__main__":
-    batches = ["Summer 2025"]
+    batches = ["Fall 2024"]
     run_scrape_yc(batches, 150)  # limit to 150 per batch for testing
     # just_test_scrape()

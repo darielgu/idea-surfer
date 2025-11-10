@@ -35,6 +35,15 @@ wheels = [
 ]
 
 [[package]]
+name = "async-timeout"
+version = "5.0.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a5/ae/136395dfbfe00dfc94da3f3e136d0b13f394cba8f4841120e34226265780/async_timeout-5.0.1.tar.gz", hash = "sha256:d9321a7a3d5a6a5e187e824d2fa0793ce379a202935782d555d6e9d2735677d3", size = 9274, upload-time = "2024-11-06T16:41:39.6Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fe/ba/e2081de779ca30d473f21f5b30e0e737c438205440784c7dfc81efc2b029/async_timeout-5.0.1-py3-none-any.whl", hash = "sha256:39e3809566ff85354557ec2398b55e096c8364bacac9405a7a1fa429e77fe76c", size = 6233, upload-time = "2024-11-06T16:41:37.9Z" },
+]
+
+[[package]]
 name = "attrs"
 version = "25.4.0"
 source = { registry = "https://pypi.org/simple" }
@@ -340,6 +349,19 @@ wheels = [
 ]
 
 [[package]]
+name = "fastapi-limiter"
+version = "0.1.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "redis" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7f/99/c7903234488d4dca5f9bccb4f88c2f582a234f0dca33348781c9cf8a48c6/fastapi_limiter-0.1.6.tar.gz", hash = "sha256:6f5fde8efebe12eb33861bdffb91009f699369a3c2862cdc7c1d9acf912ff443", size = 8307, upload-time = "2024-01-05T09:14:48.628Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cd/b5/6f6b4d18bee1cafc857eae12738b3a03b7d1102b833668be868938c57b9d/fastapi_limiter-0.1.6-py3-none-any.whl", hash = "sha256:2e53179a4208b8f2c8795e38bb001324d3dc37d2800ff49fd28ec5caabf7a240", size = 15829, upload-time = "2024-01-05T09:14:47.613Z" },
+]
+
+[[package]]
 name = "h11"
 version = "0.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -419,8 +441,10 @@ source = { virtual = "." }
 dependencies = [
     { name = "bs4" },
     { name = "fastapi" },
+    { name = "fastapi-limiter" },
     { name = "openai" },
     { name = "pydantic" },
+    { name = "redis" },
     { name = "requests" },
     { name = "selenium" },
     { name = "supabase" },
@@ -432,8 +456,10 @@ dependencies = [
 requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "fastapi", specifier = ">=0.121.0" },
+    { name = "fastapi-limiter", specifier = ">=0.1.6" },
     { name = "openai", specifier = ">=2.7.1" },
     { name = "pydantic", specifier = ">=2.12.4" },
+    { name = "redis", specifier = ">=7.0.1" },
     { name = "requests", specifier = ">=2.32.5" },
     { name = "selenium", specifier = ">=4.38.0" },
     { name = "supabase", specifier = ">=2.23.3" },
@@ -971,6 +997,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/46/47/5a049ecfc07d1a2a2e939c50a3649d63ff1404d20a29fad507185417438d/realtime-2.23.3.tar.gz", hash = "sha256:3519e2751c36f4b62535bdbcaf142daf82fdb850f12d23e5f6084da34d2829d5", size = 18536, upload-time = "2025-11-06T19:31:10.427Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ab/15/c8afe0ae735dc602a15bbf53de2c9e18d291ce198f6b73d53fa60d20b9e3/realtime-2.23.3-py3-none-any.whl", hash = "sha256:0412337700125b7090a5e98d0e1fed5cd3ce67626c7c7ffa1a0a3b93ee4d3382", size = 22140, upload-time = "2025-11-06T19:31:09.425Z" },
+]
+
+[[package]]
+name = "redis"
+version = "7.0.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "async-timeout", marker = "python_full_version < '3.11.3'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/57/8f/f125feec0b958e8d22c8f0b492b30b1991d9499a4315dfde466cf4289edc/redis-7.0.1.tar.gz", hash = "sha256:c949df947dca995dc68fdf5a7863950bf6df24f8d6022394585acc98e81624f1", size = 4755322, upload-time = "2025-10-27T14:34:00.33Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e9/97/9f22a33c475cda519f20aba6babb340fb2f2254a02fb947816960d1e669a/redis-7.0.1-py3-none-any.whl", hash = "sha256:4977af3c7d67f8f0eb8b6fec0dafc9605db9343142f634041fb0235f67c0588a", size = 339938, upload-time = "2025-10-27T14:33:58.553Z" },
 ]
 
 [[package]]
