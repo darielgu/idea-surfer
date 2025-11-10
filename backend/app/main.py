@@ -20,12 +20,7 @@ async def lifespan(app: FastAPI):
     redis_conn = await redis.from_url(
         REDIS_URL, encoding="utf-8", decode_responses=True
     )
-    try:
-        await FastAPILimiter.init(redis_conn)
-
-    except Exception as e:
-        print("⚠️ FastAPILimiter init failed:", e)
-
+    await FastAPILimiter.init(redis_conn)
     yield
     await redis_conn.close()
 
