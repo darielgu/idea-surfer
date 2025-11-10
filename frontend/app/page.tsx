@@ -64,6 +64,12 @@ export default function Home() {
 
   // Search handler
   async function handleSearch(searchQuery: string) {
+    // If the query is empty or only whitespace, send user back to home
+    if (!searchQuery || searchQuery.trim() === "") {
+      router.replace("/");
+      return;
+    }
+
     // set results and navigate to search page providing the search query & results & loading state
     router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
   }

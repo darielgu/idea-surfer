@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import ProjectCard from "@/components/ui/projectcard";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type Project = {
   id: number;
@@ -21,6 +22,7 @@ type Project = {
   similarity: number;
 };
 export default function Home() {
+  const router = useRouter();
   const query = useSearchParams().get("query");
   // load backend url from env variable
   const BACKEND_URL =
@@ -39,14 +41,19 @@ export default function Home() {
 
   // Search handler
   useEffect(() => {
-    if (query) {
-      setSearchQuery(query);
-      handleSearch(query);
+    if (query === null) return router.replace("/");
+    if (query.trim() === "" || query === " ") {
+      router.replace("/");
+      return;
     }
+
+    setSearchQuery(query);
+    handleSearch(query);
   }, [query]);
 
   async function handleSearch(searchQuery: string) {
     setLoading(true);
+
     try {
       const response = await axios.get(`${BACKEND_URL}/search/`, {
         params: { query: searchQuery },
@@ -59,7 +66,6 @@ export default function Home() {
       setLoading(false);
     }
   }
-
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-background">
       <div className="absolute inset-0 bg-grid pointer-events-none" />

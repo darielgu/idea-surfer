@@ -207,6 +207,6 @@ def just_test_scrape():
 
 
 if __name__ == "__main__":
-    batches = ["Fall 2025"]
-    run_scrape_yc(batches, 140)  # limit to 140 per batch for testing
+    batches = ["Summer 2025"]
+    run_scrape_yc(batches, 150)  # limit to 150 per batch for testing
     # just_test_scrape()

@@ -15,3 +15,4 @@ venv.bak/
 
 .env
 yc_Fall_2025.json
+*.json
