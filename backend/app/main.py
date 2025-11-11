@@ -29,7 +29,8 @@ origins = [
     "http://localhost:3000",
     "https://idea-surfer-fe.vercel.app",
     "http://idea-surfer-fe.vercel.app",
-    "https://ideasurfer.xyz",
+    "https://www.ideasurf.xyz/",
+    "http://ideasurf.xyz/",
 ]
 
 app = FastAPI()  # type: ignore
