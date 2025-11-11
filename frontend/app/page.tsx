@@ -28,14 +28,14 @@ export default function Home() {
   }>({});
   // Carousel prompts
   const prompts = [
-    "AI Customer Service",
+    "AI CRM Tool",
     "Healthcare and AI",
     "Fintech + AI",
     "AI for Education",
     "Productivity with AI",
     "Generative Design",
-    "MLOps",
-    "Privacy-preserving AI",
+    "Music Generation AI",
+    "AI for Social Good",
   ];
 
   const carouselRef = useRef<HTMLDivElement | null>(null);
