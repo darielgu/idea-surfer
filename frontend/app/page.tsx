@@ -84,14 +84,13 @@ export default function Home() {
       {/* Top Left Logo */}
       <div className="absolute z-15">
         <Link href="/">
-          <Image
+          <img
             src="/assets/ideaSurf-removebg.png"
             alt="IdeaSurf Logo"
             width={160}
             height={100}
             className="ml-2 mt-.5"
-            unoptimized
-          ></Image>
+          ></img>
         </Link>
       </div>
       {/* Main Heading */}
