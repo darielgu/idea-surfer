@@ -118,7 +118,7 @@ export default function Home() {
             <div className="relative w-full">
               <Input
                 type="text"
-                placeholder="Search projects, companies, or keywords..."
+                placeholder="Search ideas or keywords..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-white w-full px-4 py-3 text-lg rounded-lg border border-muted-foreground focus:border-foreground focus:ring-2 focus:ring-foreground transition"

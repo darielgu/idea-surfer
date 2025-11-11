@@ -91,14 +91,14 @@ export default function Home() {
             alt="IdeaSurf Logo"
             width={160}
             height={100}
-            className="ml-2 mt-.5"
+            className="ml-2 mt-.5 mb-2"
             unoptimized
           ></Image>
         </Link>
       </div>
       {/* Main Heading */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
-        <h1 className="mb-4 text-center text-5xl md:text-7xl font-bold tracking-tight text-balance">
+        <h1 className="mb-4 text-center text-5xl md:text-7xl font-bold tracking-tight text-balance mt-7.5">
           IdeaSurf
         </h1>
 
@@ -127,7 +127,7 @@ export default function Home() {
             <div className="relative w-full">
               <Input
                 type="text"
-                placeholder="Search projects, companies, or keywords..."
+                placeholder="Search ideas or keywords..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-white w-full px-4 py-3 text-lg rounded-lg border border-muted-foreground focus:border-foreground focus:ring-2 focus:ring-foreground transition"
