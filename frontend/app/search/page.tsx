@@ -9,6 +9,7 @@ import axios from "axios";
 import ProjectCard from "@/components/ui/projectcard";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/ui/loading";
 
 type Project = {
   id: number;
@@ -211,9 +212,7 @@ export default function Home() {
         <div className="w-full max-w-4xl">
           {loading ? (
             // Loading animation, right out line by line
-            <p className="text-center text-muted-foreground">
-              Searching for project ideas similar to "{searchQuery}"...
-            </p>
+            <Loading idea={searchQuery} className="mt-4" />
           ) : results.length === 0 ? (
             <p className="text-center text-muted-foreground mt-2">
               Too many requests or no results found for "{searchQuery}". Please
