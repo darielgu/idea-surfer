@@ -8,7 +8,8 @@ from fastapi_limiter.depends import RateLimiter
 router = APIRouter(prefix="/search", tags=["search"])
 
 
-@router.get("/", dependencies=[Depends(RateLimiter(times=10, seconds=60))])
+# @router.get("/", dependencies=[Depends(RateLimiter(times=10, seconds=60))])
+@router.get("/")
 async def search(
     query: str = Query(..., description="User search query"),
     sources: Optional[list[str]] = Query(
