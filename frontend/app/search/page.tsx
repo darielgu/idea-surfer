@@ -37,7 +37,7 @@ export default function Home() {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState<{
     YC?: boolean;
-    a16z?: boolean;
+    "Product Hunt"?: boolean;
     Devpost?: boolean;
   }>({});
 
@@ -92,8 +92,7 @@ export default function Home() {
             width={160}
             height={100}
             className="ml-2 mt-.5 mb-2"
-            unoptimized
-          ></Image>
+            unoptimized></Image>
         </Link>
       </div>
       {/* Main Heading */}
@@ -122,8 +121,7 @@ export default function Home() {
               }
               // update the URL query param which the useEffect listens to
               router.push(`/search?query=${encodeURIComponent(q)}`);
-            }}
-          >
+            }}>
             <div className="relative w-full">
               <Input
                 type="text"
@@ -139,8 +137,7 @@ export default function Home() {
                 aria-label="Toggle filters"
                 aria-expanded={showFilters}
                 onClick={() => setShowFilters((s) => !s)}
-                className="absolute inset-y-0 right-0 mr-2 flex items-center rounded-md px-2 text-muted-foreground hover:text-foreground"
-              >
+                className="absolute inset-y-0 right-0 mr-2 flex items-center rounded-md px-2 text-muted-foreground hover:text-foreground">
                 <ChevronDown
                   className={`transition-transform duration-200 ease-out ${
                     showFilters ? "rotate-180" : "rotate-0"
@@ -155,8 +152,7 @@ export default function Home() {
                     ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
                     : "opacity-0 -translate-y-2 scale-95 pointer-events-none"
                 }`}
-                aria-hidden={!showFilters}
-              >
+                aria-hidden={!showFilters}>
                 <div className="flex flex-col gap-2 text-sm text-foreground">
                   <label className="inline-flex items-center gap-2">
                     <input
@@ -175,15 +171,15 @@ export default function Home() {
                   <label className="inline-flex items-center gap-2">
                     <input
                       type="checkbox"
-                      checked={!!selectedFilters.a16z}
+                      checked={!!selectedFilters["Product Hunt"]}
                       onChange={(e) =>
                         setSelectedFilters((prev) => ({
                           ...prev,
-                          a16z: e.target.checked,
+                          "Product Hunt": e.target.checked,
                         }))
                       }
                     />
-                    A16z
+                    Product Hunt
                   </label>
 
                   <label className="inline-flex items-center gap-2">
