@@ -16,3 +16,5 @@ venv.bak/
 .env
 yc_Fall_2025.json
 *.json
+backend/app/graph/3d.py
+*/3d.py

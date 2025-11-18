@@ -18,7 +18,7 @@ async def search(
 ):
     """Endpoint to perform a search based on the query string."""
     if not sources:
-        sources = ["YC", "Devpost", "Product Hunt"]
+        sources = None
     embedding = embded_query(query)
 
     response = supa_base_client.rpc(
