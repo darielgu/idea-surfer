@@ -39,6 +39,7 @@ export default function Home() {
     YC?: boolean;
     "Product Hunt"?: boolean;
     Devpost?: boolean;
+    Topstartups?: boolean;
   }>({});
 
   // Search handler
@@ -180,6 +181,20 @@ export default function Home() {
                       }
                     />
                     Product Hunt
+                  </label>
+
+                  <label className="inline-flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={!!selectedFilters.Topstartups}
+                      onChange={(e) =>
+                        setSelectedFilters((prev) => ({
+                          ...prev,
+                          "Product Hunt": e.target.checked,
+                        }))
+                      }
+                    />
+                    Topstartups
                   </label>
 
                   <label className="inline-flex items-center gap-2">
