@@ -23,8 +23,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       <div
         onClick={() => setOpen(!open)}
         key={project.id}
-        className="group relative flex flex-col gap-1 rounded-lg border border-border bg-card p-6 transition-all duration-200 hover:shadow-md hover:border-border/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none hover:cursor-pointer"
-      >
+        className="group relative flex flex-col gap-1 rounded-lg border border-border bg-card p-6 transition-all duration-200 hover:shadow-md hover:border-border/80 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none hover:cursor-pointer">
         <h2 className="text-xl font-semibold mb-2">{project.name}</h2>
         <p className="text-sm text-muted-foreground mb-4">
           {project.short_description}
@@ -32,11 +31,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
         {/* Tags Section */}
         <div className="flex flex-wrap gap-2">
-          {project.tags.slice(0, 3).map((tag) => (
+          {project.tags.slice(0, 3).map((tag, i) => (
             <div
-              key={tag}
-              className="text-xs font-medium bg-muted text-muted-foreground hover:bg-muted px-2 py-1 rounded-md"
-            >
+              key={`${tag}-${i}`}
+              className="text-xs font-medium bg-muted text-muted-foreground hover:bg-muted px-2 py-1 rounded-md">
               {tag}
             </div>
           ))}
