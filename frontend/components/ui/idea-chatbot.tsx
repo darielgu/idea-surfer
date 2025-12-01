@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,7 +26,7 @@ export function IdeaChatbot({ open, onOpenChange }: IdeaChatbotProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Tell me about your idea and I can help you put it together!",
+      content: "Hi! I'm your startup consultant with access to a database of all current ideas being pursued. Tell me about your idea and I can help you put it together!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -52,6 +53,7 @@ export function IdeaChatbot({ open, onOpenChange }: IdeaChatbotProps) {
 
     // Add user message immediately
     setMessages((prev) => [...prev, userMessage]);
+    const userInput = input.trim();
     setInput("");
     setLoading(true);
 
@@ -62,8 +64,50 @@ export function IdeaChatbot({ open, onOpenChange }: IdeaChatbotProps) {
         content: msg.content,
       }));
 
+      // Check if user wants to search for similar ideas
+      // Look for affirmative responses or explicit requests
+      const lowerInput = userInput.toLowerCase();
+      const shouldSearch = 
+        lowerInput.includes("yes") ||
+        lowerInput.includes("check") ||
+        lowerInput.includes("search") ||
+        lowerInput.includes("similar") ||
+        lowerInput.includes("taken") ||
+        lowerInput.includes("already") ||
+        lowerInput.includes("sure") ||
+        lowerInput.includes("please") ||
+        lowerInput.includes("do it") ||
+        lowerInput.includes("go ahead");
+
+      // Extract the idea query - find the first substantial idea description
+      let ideaQuery = "";
+      if (shouldSearch) {
+        // Find the first substantial idea description from user messages
+        // Look through all previous user messages to find the idea
+        for (let i = 0; i < messages.length; i++) {
+          if (messages[i].role === "user") {
+            const msgContent = messages[i].content;
+            // If it's a substantial message (not just "yes", "check", etc.) and describes an idea
+            if (msgContent.length > 20 && 
+                !msgContent.toLowerCase().match(/^(yes|check|search|sure|please|do it|go ahead)/)) {
+              ideaQuery = msgContent;
+              break;
+            }
+          }
+        }
+        // If no previous idea found and current message is substantial (not just affirmation), use it
+        if (!ideaQuery && userInput.length > 20) {
+          const isJustAffirmation = /^(yes|check|search|sure|please|do it|go ahead)/i.test(userInput);
+          if (!isJustAffirmation) {
+            ideaQuery = userInput;
+          }
+        }
+      }
+
       const response = await axios.post(`${BACKEND_URL}/chat/`, {
         messages: apiMessages,
+        search_similar: shouldSearch && ideaQuery.length > 0,
+        idea_query: ideaQuery,
       });
 
       const assistantMessage: Message = {
@@ -99,6 +143,9 @@ export function IdeaChatbot({ open, onOpenChange }: IdeaChatbotProps) {
             <Bot className="size-5" />
             Idea Assistant
           </DialogTitle>
+          <DialogDescription>
+            Get help developing your startup idea and check if similar ideas already exist.
+          </DialogDescription>
         </DialogHeader>
 
         {/* Messages Container */}
