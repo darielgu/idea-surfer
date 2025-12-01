@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { IdeaSearchButton } from "@/components/ui/idea-search-button";
 
 export default function Home() {
   // Declare Router & mount
@@ -93,6 +94,10 @@ export default function Home() {
             className="ml-2 mt-.5"
             unoptimized></Image>
         </Link>
+      </div>
+      {/* Top Right Idea Search Button */}
+      <div className="absolute top-4 right-4 z-15">
+        <IdeaSearchButton />
       </div>
       {/* Main Heading */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">

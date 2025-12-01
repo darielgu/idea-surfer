@@ -10,6 +10,7 @@ from fastapi_limiter import FastAPILimiter
 
 from app.routes.scraper_routes import router as scraper_router
 from app.routes.search import router as search
+from app.routes.chat import router as chat_router
 
 load_dotenv()
 REDIS_URL = os.getenv("REDIS_URL")
@@ -44,6 +45,7 @@ app.add_middleware(
 )
 app.include_router(scraper_router)
 app.include_router(search)
+app.include_router(chat_router)
 
 
 @app.get("/")
