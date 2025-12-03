@@ -38,9 +38,6 @@ GEMINI_API_KEY="API KEY HERE"
 
 #### Notes
 
-Currently the YC scraper only grabs 10 projects from the bath you direct ex "Fall 2025" "Summer 2024"
-it embeds these and stores relevant data in the supabase.
 
-Product hunt scraper takes in `year, month, day` in order to run on a specific date to scrape.
 
 You can use the model for projects, but it is primarly buily for the YC scrape, feel free to create different files for other scrapers!
